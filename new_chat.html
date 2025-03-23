@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Chat - Sanjeevan</title>
+    <style>
+        body {
+            display: flat;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: rgb(240, 189, 93);
+        }
+
+        .header {
+            display: flat;
+            justify-content: space-between ;
+            align-items: center;
+            background: rgb(0, 93, 135);
+            border-radius: 15px;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .app-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        h4 {
+            padding: 10px;
+        }
+
+        textarea {
+            width: 97.5%;
+            height: 100px;
+            margin-top: 5px;
+            font-size: 16px;
+            padding: 10px;
+            border: 9px solid #ccc;
+            border-radius: 10px;
+            resize: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 18px;
+            color: black;
+            background-color: #f9f9f9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: rgb(0, 93, 135);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 0px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            font-family: "Roboto";
+            word-wrap: break-word;
+            overflow: auto;
+        }
+
+        .footer {
+            text-align: center;
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="app-name">Sanjeevan</div>
+    </div>
+
+    <h4>Please describe your symptoms below:</h4>
+    <textarea id="symptoms" placeholder="Describe your symptoms..."></textarea>
+    <button onclick="analyzeSymptoms()">Analyze Symptoms</button>
+    <div id="result" class="result"></div>
+
+    <script>
+        async function analyzeSymptoms() {
+            const symptoms = document.getElementById('symptoms').value;
+            if (!symptoms) {
+                alert('Please enter your symptoms.');
+                return;
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Analyzing your symptoms...';
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ symptoms }),
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${error.error}</p>`;
+                    return;
+                }
+
+                const data = await response.json();
+                resultDiv.innerHTML = `<pre>${data.response}</pre>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">An error occurred: ${error.message}</p>`;
+            }
+        }
+    </script>
+    <div class="footer">
+        <span><h4>*Note: Please don't trust it blindly, its just made for you all to search what can be the disease you have and take the precautions for your well livelihood.*</h4></span>
+        <span><h4>*If you have serious issue, please consult to doctor.*</h4></span>
+</body>
+</html>

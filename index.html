@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjeevan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flat;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+            margin: 1rem;
+            background-color: rgb(240, 189, 93);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgb(0, 93, 135);
+            border-radius: 15px;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .app-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .menu-button {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .menu-dots {
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            margin: 3px 0;
+        }
+
+        .menu-popup {
+            display: none;
+            position: absolute;
+            top: 25px;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 150px;
+        }
+
+        .menu-popup button {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .menu-popup button:hover {
+            background: #f0f0f0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 15px;
+            margin: 1rem 0;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-section {
+            width: 100%;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .news-section img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .footer:hover {
+            background: rgb(0, 93, 135);
+        }
+
+        .footer span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .footer span:hover {
+            color: black;
+        }
+
+        .history {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .delete-history {
+            color: red;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .history-line {
+            border-top: 3px double black;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="app-name">Sanjeevan</div>
+        <div class="menu-button" onclick="toggleMenu()">
+            <div class="menu-dots"></div>
+            <div class="menu-dots"></div>
+            <div class="menu-dots"></div>
+            <div class="menu-popup" id="menu-popup">
+                <button onclick="toggleTheme()">Theme</button>
+                <button onclick="showHistory()">History</button>
+                <button onclick="showAbout()">About</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="news-section">
+        <h2>Daily Medical News</h2>
+        <h4>{{ news_title }}</h4>
+        <p>{{ news_description }}</p>
+        <img src="{{ news_image }}" alt="Medical News Image">
+    </div>
+
+    <div class="footer" onclick="window.location.href='/new-chat'">
+        <span>+ New Chat...</span>
+    </div>    
+
+    <script>
+        function toggleMenu() {
+            const menuPopup = document.getElementById('menu-popup');
+            menuPopup.style.display = menuPopup.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleTheme() {
+            const theme = document.body.dataset.theme;
+            if (theme === 'light') {
+                document.body.dataset.theme = 'dark';
+                document.body.style.background = '#333';
+                document.body.style.color = '#fff';
+            } else if (theme === 'dark') {
+                document.body.dataset.theme = 'normal';
+                document.body.style.background = 'rgb(240, 189, 93)';
+                document.body.style.color = '';
+            } else {
+                document.body.dataset.theme = 'light';
+                document.body.style.background = '#f0f0f0';
+                document.body.style.color = '#333';
+            }
+        }
+
+        function showHistory() {
+            alert("Displaying user search history with delete option (to be implemented)." );
+        }
+
+        function showAbout() {
+            window.location.href = 'about.html';
+        }
+
+        function openNewChat() {
+            window.location.href = 'new_chat.html';
+        }
+    </script>
+</body>
+</html>
